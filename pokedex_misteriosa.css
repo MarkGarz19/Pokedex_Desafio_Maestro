@@ -1,748 +1,202 @@
+/* POKÉDEX: DESAFÍO MAESTRO */
 
-/* ==========================================
-   POKÉDEX: DESAFÍO MAESTRO
-   ESTILOS GENERALES
-========================================== */
-
-/* Preparo todos los elementos para controlar
-   mejor sus tamaños y evitar desbordamientos. */
-
-*,
-*::before,
-*::after {
-    box-sizing: border-box;
-}
-
-/* Bloqueo el desplazamiento de la página
-   exterior para evitar el rebote blanco
-   de Safari en el iPhone. */
-
+/* Preparo los tamaños y dejo que Safari desplace la página completa. */
+*, *::before, *::after { box-sizing: border-box; }
 html {
     width: 100%;
-    height: 100%;
-    overflow: hidden;
-    background-color: #141719;
+    min-height: 100%;
+    height: auto;
+    background-color: #211d20;
+    overflow-x: clip;
+    overflow-y: auto;
+    -webkit-text-size-adjust: 100%;
 }
-
-/* Mantengo un fondo oscuro detrás del juego
-   y evito que el body se desplace. */
-
 body {
     width: 100%;
-    height: 100%;
+    min-height: 100vh;
+    min-height: 100dvh;
+    height: auto;
     margin: 0;
-    overflow: hidden;
-
+    overflow-x: clip;
+    overflow-y: visible;
     font-family: system-ui, Arial, sans-serif;
     color: #fff9f2;
-
-    background-color: #141719;
-    background-image: radial-gradient(
-        ellipse at 50% -20%,
-        #822e34 0%,
-        #2b2325 47%,
-        #141719 100%
-    );
+    background-color: #211d20;
+    background-image: linear-gradient(180deg, #45282d 0%, #30272a 45%, #211d20 100%);
     background-repeat: no-repeat;
 }
 
-/* ==========================================
-   CONTENEDOR PRINCIPAL
-========================================== */
-
-/* Hago que el juego tenga su propio scroll.
-
-   De esta manera, no necesito desplazar
-   toda la página de Safari.
-
-   También pongo el degradado aquí para
-   que se vea detrás de las letras y botones. */
-
+/* Dejo que la altura del juego crezca: así las letras no quedan cortadas. */
 .app {
     position: relative;
-
     width: 100%;
     max-width: 630px;
-
-    height: 100vh;
-    height: 100dvh;
-
+    min-height: 100vh;
+    min-height: 100dvh;
+    height: auto;
     margin: 0 auto;
-    padding: 18px 14px 32px;
-
-    overflow-x: hidden;
-    overflow-y: auto;
-
-    background-color: #141719;
-    background-image: radial-gradient(
-        ellipse at 50% -20%,
-        #822e34 0%,
-        #2b2325 47%,
-        #141719 100%
-    );
-    background-repeat: no-repeat;
-    background-attachment: local;
-
-    overscroll-behavior-y: none;
-    -webkit-overflow-scrolling: touch;
+    padding: 18px 14px 48px;
+    overflow: visible;
+    background: transparent;
 }
-
-/* Dejo espacio extra al final del juego
-   para que los botones no queden pegados
-   al borde inferior del iPhone. */
-
 @supports (padding-bottom: env(safe-area-inset-bottom)) {
-    .app {
-        padding-bottom: calc(
-            32px + env(safe-area-inset-bottom)
-        );
-    }
+    .app { padding-bottom: calc(48px + env(safe-area-inset-bottom)); }
 }
+img, svg { max-width: 100%; }
+button, select { font: inherit; touch-action: manipulation; }
 
-/* Evito que las imágenes y dibujos
-   sean más anchos que sus contenedores. */
-
-img,
-svg {
-    max-width: 100%;
-}
-
-/* Utilizo la misma fuente en botones
-   y selectores y facilito su uso táctil. */
-
-button,
-select {
-    font: inherit;
-    touch-action: manipulation;
-}
-
-/* ==========================================
-   TÍTULO Y LOGOTIPO
-========================================== */
-
-/* Coloco el título junto al icono
-   y lo centro en la pantalla. */
-
+/* Centro el título y mantengo los colores de la Pokédex. */
 h1 {
     display: flex;
     align-items: center;
     justify-content: center;
     gap: 12px;
-
     margin: 8px 0 18px;
-
     text-align: center;
     font-size: clamp(22px, 5.8vw, 30px);
     letter-spacing: -0.6px;
 }
+h1 span { color: #ffda5b; }
+h1 .brand-text { color: #fff8f2; }
+h1 .brand-text strong { color: #ffda5b; }
+.pokedex-icon { width: 43px; height: 54px; flex: none; filter: drop-shadow(0 4px 3px #0006); }
 
-/* Destaco algunas palabras en amarillo
-   para mantener el estilo de Pokémon. */
-
-h1 span {
-    color: #ffda5b;
-}
-
-h1 .brand-text {
-    color: #fff8f2;
-}
-
-h1 .brand-text strong {
-    color: #ffda5b;
-}
-
-/* Ajusto el tamaño del icono
-   que acompaña al título. */
-
-.pokedex-icon {
-    width: 43px;
-    height: 54px;
-    flex: none;
-
-    filter: drop-shadow(0 4px 3px #0006);
-}
-
-/* ==========================================
-   TARJETA PRINCIPAL
-========================================== */
-
-/* Creo la tarjeta donde aparecen
-   todos los elementos de mi juego. */
-
+/* Diseño la tarjeta, la selección de generación y las estadísticas. */
 .card {
-    background: linear-gradient(
-        160deg,
-        #343032,
-        #232527
-    );
-
+    background: linear-gradient(160deg, #343032, #232527);
     border: 1px solid #785052;
     border-radius: 22px;
     padding: 16px;
-
     box-shadow: 0 14px 36px #0007;
 }
-
-/* Organizo el selector de generación
-   y los corazones en la parte superior. */
-
-.top {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    flex-wrap: wrap;
-    gap: 10px;
-}
-
-/* Diseño el menú para elegir
-   la generación de Pokémon. */
-
+.top { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 10px; }
 select {
     max-width: 100%;
     padding: 10px;
-
     background: #343638;
     color: white;
-
     border: 1px solid #9c6668;
     border-radius: 10px;
 }
+.stats { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 7px; margin: 13px 0; }
+.stat { padding: 9px 3px; background: #1b1d20; border-radius: 12px; text-align: center; }
+.stat b { display: block; font-size: 23px; color: #ffda5b; }
+.stat small { font-size: 11px; color: #e0cece; }
 
-/* ==========================================
-   PUNTUACIÓN Y RÉCORD
-========================================== */
-
-/* Divido las estadísticas en dos columnas. */
-
-.stats {
-    display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 7px;
-
-    margin: 13px 0;
-}
-
-/* Diseño los cuadros de puntuación. */
-
-.stat {
-    padding: 9px 3px;
-
-    background: #1b1d20;
-    border-radius: 12px;
-
-    text-align: center;
-}
-
-/* Destaco los números con color amarillo. */
-
-.stat b {
-    display: block;
-    font-size: 23px;
-    color: #ffda5b;
-}
-
-/* Pongo las etiquetas debajo
-   de cada puntuación. */
-
-.stat small {
-    font-size: 11px;
-    color: #e0cece;
-}
-
-/* ==========================================
-   IMAGEN DEL POKÉMON
-========================================== */
-
-/* Creo el círculo donde aparece
-   una pequeña parte del Pokémon.
-
-   Mantengo el borde amarillo y elimino
-   la antigua raya negra de la Poké Ball. */
-
+/* Mantengo el círculo del Pokémon sin la raya ni el botón blanco. */
 .portrait {
     position: relative;
-
     width: min(80vw, 300px);
     height: auto;
     aspect-ratio: 1 / 1;
-
     display: flex;
     align-items: center;
     justify-content: center;
-
     overflow: hidden;
-
     margin: 15px auto 10px;
-
     background: #292c30;
-
     border: 7px solid #161719;
     border-radius: 50%;
-
-    box-shadow:
-        0 0 0 3px #ffda5b,
-        0 16px 36px #0008;
+    box-shadow: 0 0 0 3px #ffda5b, 0 16px 36px #0008;
 }
+.portrait::after { content: none; display: none; }
+.portrait img { position: absolute; width: 92%; height: 92%; object-fit: contain; z-index: 2; }
+.placeholder { position: absolute; inset: 0; display: grid; place-items: center; z-index: 1; }
+.placeholder svg { width: 83%; height: 83%; }
 
-/* Me aseguro de que no aparezcan
-   la raya negra ni el botón blanco. */
-
-.portrait::after {
-    content: none;
-    display: none;
-}
-
-/* Coloco la imagen del Pokémon
-   dentro del círculo. */
-
-.portrait img {
-    position: absolute;
-
-    width: 92%;
-    height: 92%;
-
-    object-fit: contain;
-    z-index: 2;
-}
-
-/* Muestro una silueta si todavía
-   no se ha cargado la imagen. */
-
-.placeholder {
-    position: absolute;
-    inset: 0;
-
-    display: grid;
-    place-items: center;
-
-    z-index: 1;
-}
-
-/* Ajusto el tamaño de la silueta. */
-
-.placeholder svg {
-    width: 83%;
-    height: 83%;
-}
-
-/* Oculto casi toda la imagen y dejo
-   visible una pequeña zona circular.
-
-   La posición cambia en cada ronda. */
-
+/* Solo enseño una pequeña parte del Pokémon hasta terminar la ronda. */
 .mask {
     position: absolute;
     inset: 0;
     z-index: 3;
-
     pointer-events: none;
-
     background: radial-gradient(
-        circle var(--spot-radius, 25px)
-        at var(--spot-x, 50%) var(--spot-y, 50%),
-
-        transparent 0
-        calc(var(--spot-radius, 25px) - 2px),
-
-        #292c30 var(--spot-radius, 25px)
-        100%
+        circle var(--spot-radius, 25px) at var(--spot-x, 50%) var(--spot-y, 50%),
+        transparent 0 calc(var(--spot-radius, 25px) - 2px),
+        #292c30 var(--spot-radius, 25px) 100%
     );
 }
+.portrait.revealed .mask { display: none; }
 
-/* Cuando acierto o termina la ronda,
-   enseño la imagen completa. */
-
-.portrait.revealed .mask {
-    display: none;
-}
-
-/* ==========================================
-   PISTA DEL POKÉMON
-========================================== */
-
-/* Muestro una pista sobre los tipos
-   del Pokémon que tengo que adivinar. */
-
-.info {
-    min-height: 30px;
-
-    text-align: center;
-    font-size: 13px;
-    color: #f0dfd8;
-}
-
-/* ==========================================
-   LETRAS DEL NOMBRE
-========================================== */
-
-/* Organizo los huecos de las letras
-   y permito que pasen a otra fila
-   si el nombre es demasiado largo. */
-
-.word {
-    display: flex;
-    justify-content: center;
-    flex-wrap: wrap;
-    gap: 4px;
-
-    margin: 14px 0 18px;
-}
-
-/* Diseño cada hueco del nombre
-   con una línea amarilla debajo. */
-
+/* Organizo la pista, las letras y el teclado. */
+.info { min-height: 30px; text-align: center; font-size: 13px; color: #f0dfd8; }
+.word { display: flex; justify-content: center; flex-wrap: wrap; gap: 4px; margin: 14px 0 18px; }
 .letter {
     min-width: 25px;
     height: 43px;
-
     border-bottom: 3px solid #f6c64d;
-
     text-align: center;
     line-height: 40px;
-
     font-size: 23px;
     font-weight: 800;
 }
-
-/* No dibujo líneas debajo
-   de los espacios o separadores. */
-
-.letter.sep {
-    min-width: 10px;
-    border: 0;
-}
-
-/* ==========================================
-   TECLADO DEL JUEGO
-========================================== */
-
-/* Creo el teclado con nueve columnas
-   para las pantallas grandes. */
-
-.keyboard {
-    display: grid;
-    grid-template-columns: repeat(9, minmax(0, 1fr));
-    gap: 5px;
-}
-
-/* Diseño las teclas con los colores
-   rojos de mi Pokédex. */
-
+.letter.sep { min-width: 10px; border: 0; }
+.keyboard { display: grid; width: 100%; min-width: 0; grid-template-columns: repeat(9, minmax(0, 1fr)); gap: 5px; }
 .key {
+    min-width: 0;
     min-height: 43px;
     padding: 0;
-
     background: #a52d38;
     color: white;
-
     border: 1px solid #d76b6e;
     border-radius: 9px;
-
     font-weight: 800;
-
     touch-action: manipulation;
 }
+.key:disabled { opacity: .35; }
+.key.good:disabled { opacity: 1; background: #137866; }
+.key.bad:disabled { opacity: 1; background: #81344e; }
+.key:focus-visible, .actions button:focus-visible { outline: 3px solid #ffda5b; outline-offset: 2px; }
 
-/* Atenúo las letras que ya he utilizado. */
-
-.key:disabled {
-    opacity: 0.35;
-}
-
-/* Las letras acertadas aparecen en verde. */
-
-.key.good:disabled {
-    opacity: 1;
-    background: #137866;
-}
-
-/* Las letras incorrectas aparecen
-   con un color más oscuro. */
-
-.key.bad:disabled {
-    opacity: 1;
-    background: #81344e;
-}
-
-/* Destaco los botones cuando navego
-   utilizando el teclado del ordenador. */
-
-.key:focus-visible,
-.actions button:focus-visible {
-    outline: 3px solid #ffda5b;
-    outline-offset: 2px;
-}
-
-/* ==========================================
-   MENSAJES DEL JUEGO
-========================================== */
-
-/* Aquí muestro si he acertado,
-   fallado o terminado la partida. */
-
-.message {
-    min-height: 52px;
-
-    margin: 12px 0;
-
-    text-align: center;
-    font-weight: 700;
-    line-height: 1.5;
-}
-
-/* ==========================================
-   BOTONES PRINCIPALES
-========================================== */
-
-/* Coloco los botones de pista
-   y siguiente Pokémon juntos. */
-
-.actions {
-    display: flex;
-    gap: 8px;
-}
-
-/* Hago que los dos botones
-   tengan tamaños similares. */
-
-.actions button {
-    flex: 1;
-    min-width: 0;
-
-    padding: 13px 7px;
-
-    border: 0;
-    border-radius: 12px;
-
-    font-weight: 800;
-    cursor: pointer;
-}
-
-/* Botón para pasar al siguiente Pokémon. */
-
-.next {
-    background: #ffda5b;
-    color: #25201d;
-}
-
-/* Botón para descubrir una letra
-   a cambio de diez puntos. */
-
-.hint {
-    background: #55565a;
-    color: white;
-}
-
-/* ==========================================
-   RETO PERFECTO
-========================================== */
-
-/* Muestro el progreso del reto
-   de acertar todos los Pokémon. */
-
-.progress {
-    margin: 9px 0;
-
-    text-align: center;
-    font-size: 13px;
-    color: #f1d7c6;
-}
-
-/* Diseño el mensaje especial
-   que aparece al completar el reto. */
-
+/* Diseño los mensajes, botones y el reto perfecto. */
+.message { min-height: 52px; margin: 12px 0; text-align: center; font-weight: 700; line-height: 1.5; }
+.actions { display: flex; gap: 8px; }
+.actions button { flex: 1; min-width: 0; padding: 13px 7px; border: 0; border-radius: 12px; font-weight: 800; cursor: pointer; }
+.next { background: #ffda5b; color: #25201d; }
+.hint { background: #55565a; color: white; }
+.progress { margin: 9px 0; text-align: center; font-size: 13px; color: #f1d7c6; }
 .victory {
     margin: 12px 0;
     padding: 16px;
-
-    background: linear-gradient(
-        135deg,
-        #8b202b,
-        #464b31
-    );
-
+    background: linear-gradient(135deg, #8b202b, #464b31);
     border: 2px solid #f4ce65;
     border-radius: 15px;
-
     text-align: center;
     color: #fff5bd;
-
     font-weight: 900;
     font-size: 19px;
 }
+.victory[hidden] { display: none; }
+.note { margin-top: 16px; text-align: center; color: #d2bbb3; font-size: 12px; line-height: 1.5; }
 
-/* Oculto el mensaje hasta que
-   se complete el reto. */
-
-.victory[hidden] {
-    display: none;
-}
-
-/* ==========================================
-   TEXTO INFORMATIVO
-========================================== */
-
-/* Muestro las notas sobre las imágenes
-   y la conexión a internet. */
-
-.note {
-    margin-top: 16px;
-
-    text-align: center;
-    color: #d2bbb3;
-
-    font-size: 12px;
-    line-height: 1.5;
-}
-
-/* ==========================================
-   ADAPTACIÓN PARA TABLETS
-========================================== */
-
-/* Aprovecho mejor el espacio disponible
-   en las pantallas de las tablets. */
-
+/* Adapto los tamaños a las tablets. */
 @media (min-width: 601px) and (max-width: 1024px) {
-
-    .app {
-        max-width: 700px;
-        padding: 24px;
-    }
-
-    .portrait {
-        width: 300px;
-    }
-
-    .key {
-        min-height: 50px;
-        font-size: 18px;
-    }
+    .app { max-width: 700px; padding: 24px 24px 48px; }
+    .portrait { width: 300px; }
+    .key { min-height: 50px; font-size: 18px; }
 }
 
-/* ==========================================
-   ADAPTACIÓN PARA MÓVILES
-========================================== */
-
-/* Reduzco algunos tamaños para que
-   todo se vea bien en el móvil. */
-
+/* En móviles hago el teclado cómodo para pulsarlo con el dedo. */
 @media (max-width: 600px) {
-
-    .app {
-        padding: 12px 10px 24px;
-    }
-
-    .card {
-        padding: 12px;
-        border-radius: 16px;
-    }
-
-    h1 {
-        font-size: 22px;
-        gap: 8px;
-    }
-
-    .portrait {
-        width: min(70vw, 260px);
-    }
-
-    /* Utilizo siete columnas para que
-       las letras sean cómodas de pulsar. */
-
-    .keyboard {
-        grid-template-columns: repeat(7, minmax(0, 1fr));
-        gap: 5px;
-    }
-
-    .key {
-        min-height: 44px;
-        font-size: 15px;
-    }
-
-    .actions button {
-        min-height: 46px;
-    }
+    .app { padding: 12px 10px 48px; }
+    .card { padding: 12px; border-radius: 16px; }
+    h1 { font-size: 22px; gap: 8px; }
+    .portrait { width: min(70vw, 260px); }
+    .keyboard { grid-template-columns: repeat(7, minmax(0, 1fr)); gap: 5px; }
+    .key { min-height: 44px; font-size: 15px; }
+    .actions button { min-height: 46px; }
 }
-
-/* ==========================================
-   MÓVILES PEQUEÑOS
-========================================== */
-
-/* En pantallas estrechas pongo
-   los botones principales en vertical. */
-
-@media (max-width: 400px) {
-
-    .actions {
-        flex-direction: column;
-    }
-}
-
-/* Ajusto los últimos detalles
-   para los móviles más pequeños. */
-
+@media (max-width: 400px) { .actions { flex-direction: column; } }
 @media (max-width: 360px) {
-
-    h1 {
-        font-size: 19px;
-    }
-
-    .portrait {
-        width: min(68vw, 220px);
-    }
-
-    .letter {
-        min-width: 20px;
-        font-size: 19px;
-    }
-
-    .key {
-        min-height: 40px;
-        font-size: 14px;
-    }
+    h1 { font-size: 19px; }
+    .portrait { width: min(68vw, 220px); }
+    .letter { min-width: 20px; font-size: 19px; }
+    .key { min-height: 40px; font-size: 14px; }
 }
 
-/* ==========================================
-   EVITO QUE SAFARI TAPE EL TECLADO
-========================================== */
-
-/* Mantengo el juego dentro de la pantalla
-   y permito desplazar todo su contenido. */
-
-.app {
-    height: 100vh;
-    height: 100dvh;
-
-    overflow-y: auto;
-    overflow-x: hidden;
-
-    -webkit-overflow-scrolling: touch;
-    overscroll-behavior-y: contain;
-
-    /* Dejo espacio adicional al final
-       para que Safari no tape las letras. */
-    padding-bottom: 110px;
-}
-
-/* En iPhone añado también el espacio
-   de seguridad de la parte inferior. */
-
-@supports (padding-bottom: env(safe-area-inset-bottom)) {
-    .app {
-        padding-bottom: calc(
-            110px + env(safe-area-inset-bottom)
-        );
+/* Mantengo un margen inferior seguro también en los móviles pequeños. */
+@media (max-width: 600px) {
+    @supports (padding-bottom: env(safe-area-inset-bottom)) {
+        .app { padding-bottom: calc(48px + env(safe-area-inset-bottom)); }
     }
-}
-
-/* Evito que el teclado se corte
-   horizontalmente en pantallas pequeñas. */
-
-.keyboard {
-    width: 100%;
-    min-width: 0;
-}
-
-.key {
-    min-width: 0;
 }
