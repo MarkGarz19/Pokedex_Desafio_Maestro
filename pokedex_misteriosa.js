@@ -319,7 +319,7 @@
         imagen.hidden = false;
 
         $("note").textContent =
-          "Imagen cargada correctamente.";
+          "";
       };
 
       imagenTemporal.onerror = probarImagen;
