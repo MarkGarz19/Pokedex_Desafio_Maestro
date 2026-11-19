@@ -200,3 +200,47 @@ select {
         .app { padding-bottom: calc(48px + env(safe-area-inset-bottom)); }
     }
 }
+
+/* ==========================================
+   REDUZCO EL TAMAÑO DE LAS LETRAS
+========================================== */
+
+/* Hago más compacto el teclado del juego. */
+.keyboard {
+    gap: 4px;
+}
+
+/* Reduzco el tamaño de los botones
+   sin hacerlos demasiado pequeños para pulsar. */
+.key {
+    min-height: 40px;
+    font-size: 14px;
+    border-radius: 7px;
+}
+
+/* Ajusto las letras del nombre del Pokémon. */
+.letter {
+    min-width: 21px;
+    height: 36px;
+    line-height: 33px;
+    font-size: 19px;
+}
+
+/* En móviles mantengo un tamaño cómodo
+   para utilizar el teclado con los dedos. */
+@media (max-width: 600px) {
+    .keyboard {
+        grid-template-columns: repeat(7, minmax(0, 1fr));
+        gap: 4px;
+    }
+
+    .key {
+        min-height: 40px;
+        font-size: 14px;
+    }
+
+    .letter {
+        min-width: 21px;
+        font-size: 19px;
+    }
+}
