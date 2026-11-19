@@ -1,0 +1,318 @@
+
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Aquí pongo el nombre que aparece en la pestaña del navegador. -->
+    <title>Pokédex: Desafío Maestro · Adivina el Pokémon</title>
+
+    <!-- Conecto mi archivo CSS para darle estilo al juego. -->
+    <link rel="stylesheet" href="pokedex_misteriosa.css">
+</head>
+
+<body>
+
+    <!-- Aquí empieza todo el contenido de mi juego. -->
+    <main class="app">
+
+        <!-- Este es el título principal de mi Pokédex. -->
+        <h1>
+
+            <!-- He creado un pequeño icono de Pokédex con SVG. -->
+            <svg
+                class="pokedex-icon"
+                viewBox="0 0 64 78"
+                role="img"
+                aria-label="Icono de Pokédex"
+            >
+                <!-- Dibujo la parte roja de la Pokédex. -->
+                <rect
+                    x="7"
+                    y="3"
+                    width="50"
+                    height="72"
+                    rx="9"
+                    fill="#c92835"
+                    stroke="#151719"
+                    stroke-width="4"
+                />
+
+                <!-- Esta línea separa las dos partes de la Pokédex. -->
+                <path
+                    d="M33 4V74"
+                    stroke="#8d1726"
+                    stroke-width="3"
+                />
+
+                <!-- Aquí pongo la luz azul de la Pokédex. -->
+                <circle
+                    cx="21"
+                    cy="19"
+                    r="11"
+                    fill="#b9efff"
+                    stroke="#fff"
+                    stroke-width="3"
+                />
+
+                <!-- Añado dos luces pequeñas para decorar. -->
+                <circle
+                    cx="43"
+                    cy="13"
+                    r="3"
+                    fill="#f8d04c"
+                />
+
+                <circle
+                    cx="51"
+                    cy="13"
+                    r="3"
+                    fill="#60cb8d"
+                />
+
+                <!-- Esta es la pantalla verde de la Pokédex. -->
+                <rect
+                    x="13"
+                    y="35"
+                    width="35"
+                    height="24"
+                    rx="4"
+                    fill="#9fceac"
+                    stroke="#151719"
+                    stroke-width="3"
+                />
+
+                <!-- Dibujo unos detalles dentro de la pantalla. -->
+                <path
+                    d="M20 49h20M30 42v14"
+                    stroke="#426b5c"
+                    stroke-width="2"
+                />
+
+                <!-- Estos son los botones de la parte inferior. -->
+                <circle
+                    cx="20"
+                    cy="67"
+                    r="4"
+                    fill="#f5d150"
+                />
+
+                <rect
+                    x="36"
+                    y="64"
+                    width="13"
+                    height="5"
+                    rx="2"
+                    fill="#1e2224"
+                />
+            </svg>
+
+            <!-- Aquí escribo el nombre de mi juego. -->
+            <span class="brand-text">
+                Pokédex:
+                <strong>Desafío Maestro</strong>
+            </span>
+
+        </h1>
+
+        <!-- Dentro de esta sección pongo todo lo necesario para jugar. -->
+        <section class="card">
+
+            <!-- En la parte superior dejo elegir la generación. -->
+            <div class="top">
+
+                <!-- Con este menú puedo elegir de qué generación
+                     quiero que aparezcan los Pokémon. -->
+                <select id="gen" aria-label="Generación">
+
+                    <option value="all">
+                        Todas las generaciones
+                    </option>
+
+                    <option value="1">Generación 1</option>
+                    <option value="2">Generación 2</option>
+                    <option value="3">Generación 3</option>
+                    <option value="4">Generación 4</option>
+                    <option value="5">Generación 5</option>
+                    <option value="6">Generación 6</option>
+                    <option value="7">Generación 7</option>
+                    <option value="8">Generación 8</option>
+                    <option value="9">Generación 9</option>
+
+                </select>
+
+                <!-- Aquí muestro los cinco corazones del jugador.
+                     Cuando falla una letra, desaparece uno. -->
+                <strong id="hearts" aria-label="5 corazones">
+                    ❤️ ❤️ ❤️ ❤️ ❤️
+                </strong>
+
+            </div>
+
+            <!-- En este apartado enseño los puntos y el récord. -->
+            <div
+                class="stats"
+                style="grid-template-columns: repeat(2, 1fr);"
+            >
+
+                <!-- Aquí se ve la puntuación que llevo. -->
+                <div class="stat">
+                    <b id="score">0</b>
+                    <small>Puntos</small>
+                </div>
+
+                <!-- Aquí se muestra mi mejor puntuación. -->
+                <div class="stat">
+                    <b id="best">0</b>
+                    <small>Récord</small>
+                </div>
+
+            </div>
+
+            <!-- Aquí enseño cuántos Pokémon he acertado
+                 sin cometer errores en el reto perfecto. -->
+            <div
+                class="progress"
+                id="progress"
+                aria-live="polite"
+            ></div>
+
+            <!-- Este mensaje aparece cuando consigo
+                 completar el reto perfecto. -->
+            <div
+                class="victory"
+                id="victory"
+                hidden
+            ></div>
+
+            <!-- Esta parte es donde se ve el Pokémon.
+                 Al principio solo muestro un pequeño trozo. -->
+            <div class="portrait" id="portrait">
+
+                <!-- He puesto una silueta de respaldo
+                     por si la imagen no se puede cargar. -->
+                <div class="placeholder" id="placeholder">
+
+                    <svg
+                        viewBox="0 0 200 200"
+                        aria-label="Silueta de criatura"
+                    >
+
+                        <!-- Dibujo la forma de la criatura. -->
+                        <g
+                            fill="#9ce1ff"
+                            stroke="#1c547c"
+                            stroke-width="4"
+                        >
+
+                            <path
+                                d="M43 82 L18 20 L78 59
+                                   Q100 42 122 59
+                                   L182 20 L157 82
+                                   Q179 115 154 151
+                                   Q130 179 100 178
+                                   Q70 179 46 151
+                                   Q21 115 43 82Z"
+                            />
+
+                            <!-- Estos círculos son sus ojos. -->
+                            <circle
+                                cx="72"
+                                cy="108"
+                                r="8"
+                                fill="#17476e"
+                            />
+
+                            <circle
+                                cx="128"
+                                cy="108"
+                                r="8"
+                                fill="#17476e"
+                            />
+
+                            <!-- Aquí dibujo la boca. -->
+                            <path
+                                d="M86 137 Q100 149 114 137"
+                                fill="none"
+                                stroke="#17476e"
+                                stroke-linecap="round"
+                            />
+
+                        </g>
+                    </svg>
+
+                </div>
+
+                <!-- Aquí cargo la imagen real del Pokémon.
+                     El JavaScript cambia la imagen en cada ronda. -->
+                <img
+                    id="sprite"
+                    alt="Imagen del Pokémon"
+                    hidden
+                >
+
+                <!-- Esta capa sirve para ocultar casi toda
+                     la imagen y dejar visible solo una zona. -->
+                <div class="mask"></div>
+
+            </div>
+
+            <!-- Aquí doy una pista diciendo de qué tipo es.
+                 Por ejemplo: Es un Pokémon de tipo eléctrico. -->
+            <div class="info" id="info">
+                Cargando tipo del Pokémon…
+            </div>
+
+            <!-- Aquí aparecerán los huecos del nombre.
+                 El JavaScript irá mostrando las letras acertadas. -->
+            <div class="word" id="word"></div>
+
+            <!-- En este apartado creo el teclado con las letras
+                 para que también se pueda jugar desde el móvil. -->
+            <div class="keyboard" id="keyboard"></div>
+
+            <!-- Aquí muestro los mensajes del juego:
+                 si he acertado, fallado o perdido. -->
+            <div
+                class="message"
+                id="message"
+                aria-live="polite"
+            ></div>
+
+            <!-- Aquí pongo los dos botones principales. -->
+            <div class="actions">
+
+                <!-- Este botón descubre una letra,
+                     pero me quita 10 puntos. -->
+                <button class="hint" id="hint">
+                    💡 Pista (−10 puntos)
+                </button>
+
+                <!-- Con este botón puedo pasar a otro Pokémon. -->
+                <button class="next" id="next">
+                    🔄 Otro Pokémon
+                </button>
+
+            </div>
+
+            <!-- Aquí aviso de que hace falta internet
+                 para cargar las imágenes oficiales. -->
+            <p class="note" id="note">
+                Si la imagen oficial no carga, se muestra
+                una silueta de respaldo. Para ver las
+                imágenes reales se necesita internet.
+            </p>
+
+        </section>
+
+    </main>
+
+    <!-- Por último conecto mi JavaScript.
+         Aquí tengo las reglas, las letras,
+         las imágenes, los puntos y las generaciones. -->
+    <script src="pokedex_misteriosa.js"></script>
+
+</body>
+</html>

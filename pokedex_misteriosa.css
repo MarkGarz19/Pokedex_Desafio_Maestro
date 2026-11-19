@@ -1,0 +1,554 @@
+
+/* Primero preparo todos los elementos
+   para controlar mejor sus tamaños. */
+
+* {
+    box-sizing: border-box;
+}
+
+/* Aquí pongo el fondo de mi página.
+   He elegido colores oscuros y rojizos
+   para que recuerde a una Pokédex. */
+
+body {
+    margin: 0;
+    font-family: system-ui, Arial, sans-serif;
+
+    background: radial-gradient(
+        ellipse at 50% -20%,
+        #822e34 0%,
+        #2b2325 47%,
+        #141719 100%
+    );
+
+    color: #fff9f2;
+}
+
+/* Centro el juego y le doy un ancho máximo
+   para que no se vea demasiado grande. */
+
+.app {
+    max-width: 630px;
+    margin: auto;
+    padding: 18px 14px 32px;
+}
+
+/* ---------------------------------------
+   TÍTULO Y LOGOTIPO
+--------------------------------------- */
+
+/* Aquí coloco el título junto al icono
+   de la Pokédex. */
+
+h1 {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+
+    text-align: center;
+    font-size: clamp(22px, 5.8vw, 30px);
+    letter-spacing: -0.6px;
+
+    margin: 8px 0 18px;
+}
+
+/* Pongo el nombre del juego en blanco
+   y destaco Desafío Maestro en amarillo. */
+
+h1 span {
+    color: #ffda5b;
+}
+
+h1 .brand-text {
+    color: #fff8f2;
+}
+
+h1 .brand-text strong {
+    color: #ffda5b;
+}
+
+/* Ajusto el tamaño del dibujo de la Pokédex. */
+
+.pokedex-icon {
+    width: 43px;
+    height: 54px;
+    flex: none;
+
+    filter: drop-shadow(0 4px 3px #0006);
+}
+
+/* ---------------------------------------
+   TARJETA PRINCIPAL
+--------------------------------------- */
+
+/* Esta es la tarjeta donde pongo
+   todos los elementos del juego. */
+
+.card {
+    background: linear-gradient(
+        160deg,
+        #343032,
+        #232527
+    );
+
+    border: 1px solid #785052;
+    border-radius: 22px;
+    padding: 16px;
+
+    box-shadow: 0 14px 36px #0007;
+}
+
+/* Coloco el selector de generación
+   y los corazones en la parte superior. */
+
+.top {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+}
+
+/* Hago que los botones y el selector
+   utilicen la misma fuente. */
+
+select,
+button {
+    font: inherit;
+}
+
+/* Diseño el menú donde elijo
+   la generación de Pokémon. */
+
+select {
+    background: #343638;
+    color: white;
+
+    border: 1px solid #9c6668;
+    border-radius: 10px;
+
+    padding: 10px;
+    max-width: 100%;
+}
+
+/* ---------------------------------------
+   PUNTOS Y RÉCORD
+--------------------------------------- */
+
+/* Organizo las estadísticas en dos columnas:
+   una para los puntos y otra para el récord. */
+
+.stats {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 7px;
+
+    margin: 13px 0;
+}
+
+/* Diseño cada cuadro de puntuación. */
+
+.stat {
+    background: #1b1d20;
+    text-align: center;
+
+    border-radius: 12px;
+    padding: 9px 3px;
+}
+
+/* Hago que los números destaquen
+   con un tamaño grande y color amarillo. */
+
+.stat b {
+    display: block;
+    font-size: 23px;
+    color: #ffda5b;
+}
+
+/* Este texto indica qué representa
+   cada número del marcador. */
+
+.stat small {
+    font-size: 11px;
+    color: #e0cece;
+}
+
+/* ---------------------------------------
+   IMAGEN DEL POKÉMON
+--------------------------------------- */
+
+/* Aquí creo el círculo donde aparece
+   una pequeña parte del Pokémon.
+
+   Antes tenía una raya negra y un punto
+   blanco para simular una Poké Ball.
+
+   Ahora los he quitado para que no tapen
+   la imagen y se vea mucho más limpia. */
+
+.portrait {
+    width: min(80vw, 300px);
+    height: auto;
+    aspect-ratio: 1 / 1;
+
+    position: relative;
+    overflow: hidden;
+
+    margin: 15px auto 10px;
+
+    border-radius: 50%;
+    border: 7px solid #161719;
+
+    /* Dejo un fondo oscuro uniforme. */
+    background: #292c30;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    /* Mantengo el borde amarillo del círculo. */
+    box-shadow:
+        0 0 0 3px #ffda5b,
+        0 16px 36px #0008;
+}
+
+/* Me aseguro de que no aparezca
+   la antigua raya negra ni el botón blanco. */
+
+.portrait::after {
+    display: none;
+}
+
+/* Coloco la imagen real del Pokémon
+   dentro del círculo. */
+
+.portrait img {
+    position: absolute;
+
+    width: 92%;
+    height: 92%;
+
+    object-fit: contain;
+    z-index: 2;
+}
+
+/* Si la imagen no se puede cargar,
+   muestro la silueta que puse en el HTML. */
+
+.placeholder {
+    position: absolute;
+    inset: 0;
+
+    display: grid;
+    place-items: center;
+
+    z-index: 1;
+}
+
+/* Ajusto el tamaño de la silueta
+   para que quede dentro del círculo. */
+
+.placeholder svg {
+    width: 83%;
+    height: 83%;
+}
+
+/* Esta capa oculta casi toda la imagen.
+
+   Solo dejo visible un círculo pequeño
+   que cambia de posición en cada ronda.
+
+   Así el jugador tiene que adivinar
+   qué Pokémon está viendo. */
+
+.mask {
+    position: absolute;
+    inset: 0;
+    z-index: 3;
+
+    pointer-events: none;
+
+    background: radial-gradient(
+        circle var(--spot-radius, 25px)
+        at var(--spot-x, 50%) var(--spot-y, 50%),
+
+        transparent 0
+        calc(var(--spot-radius, 25px) - 2px),
+
+        #292c30 var(--spot-radius, 25px)
+        100%
+    );
+}
+
+/* Cuando termino la ronda,
+   quito la máscara y enseño
+   el Pokémon completo. */
+
+.portrait.revealed .mask {
+    display: none;
+}
+
+/* ---------------------------------------
+   PISTA DEL TIPO DE POKÉMON
+--------------------------------------- */
+
+/* Debajo de la imagen muestro una pista.
+
+   Por ejemplo:
+   Es un Pokémon de tipo fuego y volador. */
+
+.info {
+    text-align: center;
+    color: #f0dfd8;
+
+    font-size: 13px;
+    min-height: 30px;
+}
+
+/* ---------------------------------------
+   LETRAS DEL NOMBRE
+--------------------------------------- */
+
+/* Aquí organizo los huecos donde
+   van apareciendo las letras acertadas. */
+
+.word {
+    display: flex;
+    justify-content: center;
+    gap: 4px;
+    flex-wrap: wrap;
+
+    margin: 14px 0 18px;
+}
+
+/* Cada letra tiene una línea amarilla debajo,
+   como en los juegos de adivinar palabras. */
+
+.letter {
+    min-width: 25px;
+    height: 43px;
+
+    border-bottom: 3px solid #f6c64d;
+
+    text-align: center;
+    line-height: 40px;
+
+    font-size: 23px;
+    font-weight: 800;
+}
+
+/* Si el nombre tiene un guion o un espacio,
+   no quiero que aparezca una línea debajo. */
+
+.letter.sep {
+    border: 0;
+    min-width: 10px;
+}
+
+/* ---------------------------------------
+   TECLADO DEL JUEGO
+--------------------------------------- */
+
+/* Creo un teclado con nueve columnas
+   para colocar las letras. */
+
+.keyboard {
+    display: grid;
+    grid-template-columns: repeat(9, minmax(0, 1fr));
+    gap: 5px;
+}
+
+/* Diseño los botones de las letras
+   con el color rojo de mi Pokédex. */
+
+.key {
+    min-height: 43px;
+    padding: 0;
+
+    background: #a52d38;
+    color: white;
+
+    border: 1px solid #d76b6e;
+    border-radius: 9px;
+
+    font-weight: 800;
+    touch-action: manipulation;
+}
+
+/* Cuando ya he usado una letra,
+   desactivo su botón. */
+
+.key:disabled {
+    opacity: 0.35;
+}
+
+/* Las letras correctas aparecen en verde. */
+
+.key.good:disabled {
+    opacity: 1;
+    background: #137866;
+}
+
+/* Las letras incorrectas aparecen
+   con un color más oscuro. */
+
+.key.bad:disabled {
+    opacity: 1;
+    background: #81344e;
+}
+
+/* Añado un borde amarillo cuando
+   selecciono botones con el teclado. */
+
+.key:focus-visible,
+.actions button:focus-visible {
+    outline: 3px solid #ffda5b;
+    outline-offset: 2px;
+}
+
+/* ---------------------------------------
+   MENSAJES DEL JUEGO
+--------------------------------------- */
+
+/* Aquí muestro mensajes cuando acierto,
+   fallo una letra o pierdo la partida. */
+
+.message {
+    min-height: 52px;
+
+    text-align: center;
+    font-weight: 700;
+    line-height: 1.5;
+
+    margin: 12px 0;
+}
+
+/* ---------------------------------------
+   BOTONES PRINCIPALES
+--------------------------------------- */
+
+/* Coloco los botones de pista
+   y siguiente Pokémon uno al lado del otro. */
+
+.actions {
+    display: flex;
+    gap: 8px;
+}
+
+/* Hago que los dos botones
+   tengan un tamaño parecido. */
+
+.actions button {
+    flex: 1;
+
+    padding: 13px 7px;
+
+    border-radius: 12px;
+    border: 0;
+
+    font-weight: 800;
+    cursor: pointer;
+}
+
+/* Este es el botón para pasar
+   a otro Pokémon. */
+
+.next {
+    background: #ffda5b;
+    color: #25201d;
+}
+
+/* Este botón permite descubrir una letra
+   a cambio de perder diez puntos. */
+
+.hint {
+    background: #55565a;
+    color: white;
+}
+
+/* ---------------------------------------
+   RETO PERFECTO
+--------------------------------------- */
+
+/* Aquí muestro cuántos Pokémon he acertado
+   sin cometer ningún error. */
+
+.progress {
+    text-align: center;
+
+    font-size: 13px;
+    color: #f1d7c6;
+
+    margin: 9px 0;
+}
+
+/* Cuando completo todos los Pokémon
+   del reto, aparece un mensaje especial. */
+
+.victory {
+    background: linear-gradient(
+        135deg,
+        #8b202b,
+        #464b31
+    );
+
+    border: 2px solid #f4ce65;
+    border-radius: 15px;
+
+    padding: 16px;
+    margin: 12px 0;
+
+    text-align: center;
+    color: #fff5bd;
+
+    font-weight: 900;
+    font-size: 19px;
+}
+
+/* Mantengo oculto el mensaje
+   mientras no haya ganado el reto. */
+
+.victory[hidden] {
+    display: none;
+}
+
+/* ---------------------------------------
+   TEXTO INFORMATIVO
+--------------------------------------- */
+
+/* Aquí pongo los avisos relacionados
+   con las imágenes y la conexión a internet. */
+
+.note {
+    text-align: center;
+    color: #d2bbb3;
+
+    font-size: 12px;
+    line-height: 1.5;
+
+    margin-top: 16px;
+}
+
+/* ---------------------------------------
+   ADAPTACIÓN PARA MÓVILES
+--------------------------------------- */
+
+/* Cuando la pantalla es pequeña,
+   reduzco el número de letras por fila
+   y coloco los botones uno debajo del otro. */
+
+@media (max-width: 400px) {
+
+    .keyboard {
+        grid-template-columns: repeat(7, 1fr);
+    }
+
+    .key {
+        min-height: 40px;
+    }
+
+    .actions {
+        flex-direction: column;
+    }
+}
