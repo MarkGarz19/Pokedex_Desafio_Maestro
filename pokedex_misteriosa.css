@@ -701,3 +701,48 @@ select {
         font-size: 14px;
     }
 }
+
+/* ==========================================
+   EVITO QUE SAFARI TAPE EL TECLADO
+========================================== */
+
+/* Mantengo el juego dentro de la pantalla
+   y permito desplazar todo su contenido. */
+
+.app {
+    height: 100vh;
+    height: 100dvh;
+
+    overflow-y: auto;
+    overflow-x: hidden;
+
+    -webkit-overflow-scrolling: touch;
+    overscroll-behavior-y: contain;
+
+    /* Dejo espacio adicional al final
+       para que Safari no tape las letras. */
+    padding-bottom: 110px;
+}
+
+/* En iPhone añado también el espacio
+   de seguridad de la parte inferior. */
+
+@supports (padding-bottom: env(safe-area-inset-bottom)) {
+    .app {
+        padding-bottom: calc(
+            110px + env(safe-area-inset-bottom)
+        );
+    }
+}
+
+/* Evito que el teclado se corte
+   horizontalmente en pantallas pequeñas. */
+
+.keyboard {
+    width: 100%;
+    min-width: 0;
+}
+
+.key {
+    min-width: 0;
+}
