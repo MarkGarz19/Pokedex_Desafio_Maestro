@@ -1,24 +1,17 @@
 /* POKÉDEX: DESAFÍO MAESTRO */
 
-/* Preparo los tamaños y dejo que Safari desplace la página completa. */
+/* Preparo los tamaños y dejo que Safari desplace toda la página. */
 *, *::before, *::after { box-sizing: border-box; }
 html {
-    width: 100%;
-    min-height: 100%;
-    height: auto;
+    width: 100%; min-height: 100%; height: auto;
     background-color: #211d20;
-    overflow-x: clip;
-    overflow-y: auto;
+    overflow-x: clip; overflow-y: auto;
     -webkit-text-size-adjust: 100%;
 }
 body {
-    width: 100%;
-    min-height: 100vh;
-    min-height: 100dvh;
-    height: auto;
-    margin: 0;
-    overflow-x: clip;
-    overflow-y: visible;
+    width: 100%; min-height: 100vh; min-height: 100dvh;
+    height: auto; margin: 0;
+    overflow-x: clip; overflow-y: visible;
     font-family: system-ui, Arial, sans-serif;
     color: #fff9f2;
     background-color: #211d20;
@@ -26,18 +19,12 @@ body {
     background-repeat: no-repeat;
 }
 
-/* Dejo que la altura del juego crezca: así las letras no quedan cortadas. */
+/* Dejo que el juego crezca para que ninguna letra quede cortada. */
 .app {
-    position: relative;
-    width: 100%;
-    max-width: 630px;
-    min-height: 100vh;
-    min-height: 100dvh;
-    height: auto;
-    margin: 0 auto;
-    padding: 18px 14px 48px;
-    overflow: visible;
-    background: transparent;
+    position: relative; width: 100%; max-width: 630px;
+    min-height: 100vh; min-height: 100dvh; height: auto;
+    margin: 0 auto; padding: 18px 14px 48px;
+    overflow: visible; background: transparent;
 }
 @supports (padding-bottom: env(safe-area-inset-bottom)) {
     .app { padding-bottom: calc(48px + env(safe-area-inset-bottom)); }
@@ -45,71 +32,70 @@ body {
 img, svg { max-width: 100%; }
 button, select { font: inherit; touch-action: manipulation; }
 
-/* Centro el título y mantengo los colores de la Pokédex. */
+/* Centro el título y mantengo los colores de mi Pokédex. */
 h1 {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 12px;
-    margin: 8px 0 18px;
-    text-align: center;
-    font-size: clamp(22px, 5.8vw, 30px);
+    display: flex; align-items: center; justify-content: center;
+    gap: 12px; margin: 8px 0 18px;
+    text-align: center; font-size: clamp(22px, 5.8vw, 30px);
     letter-spacing: -0.6px;
 }
 h1 span { color: #ffda5b; }
 h1 .brand-text { color: #fff8f2; }
 h1 .brand-text strong { color: #ffda5b; }
-.pokedex-icon { width: 43px; height: 54px; flex: none; filter: drop-shadow(0 4px 3px #0006); }
+.pokedex-icon {
+    width: 43px; height: 54px; flex: none;
+    filter: drop-shadow(0 4px 3px #0006);
+}
 
-/* Diseño la tarjeta, la selección de generación y las estadísticas. */
+/* Diseño la tarjeta, el selector de generación y las estadísticas. */
 .card {
     background: linear-gradient(160deg, #343032, #232527);
-    border: 1px solid #785052;
-    border-radius: 22px;
-    padding: 16px;
-    box-shadow: 0 14px 36px #0007;
+    border: 1px solid #785052; border-radius: 22px;
+    padding: 16px; box-shadow: 0 14px 36px #0007;
 }
-.top { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 10px; }
+.top {
+    display: flex; align-items: center; justify-content: space-between;
+    flex-wrap: wrap; gap: 10px;
+}
 select {
-    max-width: 100%;
-    padding: 10px;
-    background: #343638;
-    color: white;
-    border: 1px solid #9c6668;
-    border-radius: 10px;
+    max-width: 100%; padding: 10px; background: #343638;
+    color: white; border: 1px solid #9c6668; border-radius: 10px;
 }
-.stats { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 7px; margin: 13px 0; }
-.stat { padding: 9px 3px; background: #1b1d20; border-radius: 12px; text-align: center; }
+.stats {
+    display: grid; grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 7px; margin: 13px 0;
+}
+.stat {
+    padding: 9px 3px; background: #1b1d20;
+    border-radius: 12px; text-align: center;
+}
 .stat b { display: block; font-size: 23px; color: #ffda5b; }
 .stat small { font-size: 11px; color: #e0cece; }
 
 /* Mantengo el círculo del Pokémon sin la raya ni el botón blanco. */
 .portrait {
-    position: relative;
-    width: min(80vw, 300px);
-    height: auto;
-    aspect-ratio: 1 / 1;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    overflow: hidden;
-    margin: 15px auto 10px;
-    background: #292c30;
-    border: 7px solid #161719;
+    position: relative; width: min(80vw, 300px); height: auto;
+    aspect-ratio: 1 / 1; display: flex;
+    align-items: center; justify-content: center;
+    overflow: hidden; margin: 15px auto 10px;
+    background: #292c30; border: 7px solid #161719;
     border-radius: 50%;
     box-shadow: 0 0 0 3px #ffda5b, 0 16px 36px #0008;
 }
 .portrait::after { content: none; display: none; }
-.portrait img { position: absolute; width: 92%; height: 92%; object-fit: contain; z-index: 2; }
-.placeholder { position: absolute; inset: 0; display: grid; place-items: center; z-index: 1; }
+.portrait img {
+    position: absolute; width: 92%; height: 92%;
+    object-fit: contain; z-index: 2;
+}
+.placeholder {
+    position: absolute; inset: 0; display: grid;
+    place-items: center; z-index: 1;
+}
 .placeholder svg { width: 83%; height: 83%; }
 
-/* Solo enseño una pequeña parte del Pokémon hasta terminar la ronda. */
+/* Solo enseño una parte del Pokémon hasta terminar la ronda. */
 .mask {
-    position: absolute;
-    inset: 0;
-    z-index: 3;
-    pointer-events: none;
+    position: absolute; inset: 0; z-index: 3; pointer-events: none;
     background: radial-gradient(
         circle var(--spot-radius, 25px) at var(--spot-x, 50%) var(--spot-y, 50%),
         transparent 0 calc(var(--spot-radius, 25px) - 2px),
@@ -118,56 +104,64 @@ select {
 }
 .portrait.revealed .mask { display: none; }
 
-/* Organizo la pista, las letras y el teclado. */
+/* Organizo la pista, las letras del nombre y el teclado. */
 .info { min-height: 30px; text-align: center; font-size: 13px; color: #f0dfd8; }
-.word { display: flex; justify-content: center; flex-wrap: wrap; gap: 4px; margin: 14px 0 18px; }
+.word {
+    display: flex; justify-content: center; flex-wrap: wrap;
+    gap: 4px; margin: 14px 0 18px;
+}
 .letter {
-    min-width: 25px;
-    height: 43px;
+    min-width: 21px; height: 36px;
     border-bottom: 3px solid #f6c64d;
-    text-align: center;
-    line-height: 40px;
-    font-size: 23px;
-    font-weight: 800;
+    text-align: center; line-height: 33px;
+    font-size: 19px; font-weight: 800;
 }
 .letter.sep { min-width: 10px; border: 0; }
-.keyboard { display: grid; width: 100%; min-width: 0; grid-template-columns: repeat(9, minmax(0, 1fr)); gap: 5px; }
+.keyboard {
+    display: grid; width: 100%; min-width: 0;
+    grid-template-columns: repeat(9, minmax(0, 1fr)); gap: 4px;
+}
 .key {
-    min-width: 0;
-    min-height: 43px;
-    padding: 0;
-    background: #a52d38;
-    color: white;
-    border: 1px solid #d76b6e;
-    border-radius: 9px;
-    font-weight: 800;
-    touch-action: manipulation;
+    min-width: 0; min-height: 40px; padding: 0;
+    background: #a52d38; color: white;
+    border: 1px solid #d76b6e; border-radius: 7px;
+    font-size: 14px; font-weight: 800; touch-action: manipulation;
 }
 .key:disabled { opacity: .35; }
 .key.good:disabled { opacity: 1; background: #137866; }
 .key.bad:disabled { opacity: 1; background: #81344e; }
-.key:focus-visible, .actions button:focus-visible { outline: 3px solid #ffda5b; outline-offset: 2px; }
+.key:focus-visible, .actions button:focus-visible {
+    outline: 3px solid #ffda5b; outline-offset: 2px;
+}
 
-/* Diseño los mensajes, botones y el reto perfecto. */
-.message { min-height: 52px; margin: 12px 0; text-align: center; font-weight: 700; line-height: 1.5; }
+/* Diseño los mensajes, los botones y el reto perfecto. */
+.message {
+    min-height: 52px; margin: 12px 0; text-align: center;
+    font-weight: 700; line-height: 1.5;
+}
 .actions { display: flex; gap: 8px; }
-.actions button { flex: 1; min-width: 0; padding: 13px 7px; border: 0; border-radius: 12px; font-weight: 800; cursor: pointer; }
+.actions button {
+    flex: 1; min-width: 0; padding: 13px 7px;
+    border: 0; border-radius: 12px; font-weight: 800; cursor: pointer;
+}
 .next { background: #ffda5b; color: #25201d; }
 .hint { background: #55565a; color: white; }
-.progress { margin: 9px 0; text-align: center; font-size: 13px; color: #f1d7c6; }
+.progress {
+    margin: 9px 0; text-align: center;
+    font-size: 13px; color: #f1d7c6;
+}
 .victory {
-    margin: 12px 0;
-    padding: 16px;
+    margin: 12px 0; padding: 16px;
     background: linear-gradient(135deg, #8b202b, #464b31);
-    border: 2px solid #f4ce65;
-    border-radius: 15px;
-    text-align: center;
-    color: #fff5bd;
-    font-weight: 900;
-    font-size: 19px;
+    border: 2px solid #f4ce65; border-radius: 15px;
+    text-align: center; color: #fff5bd;
+    font-weight: 900; font-size: 19px;
 }
 .victory[hidden] { display: none; }
-.note { margin-top: 16px; text-align: center; color: #d2bbb3; font-size: 12px; line-height: 1.5; }
+.note {
+    margin-top: 16px; text-align: center; color: #d2bbb3;
+    font-size: 12px; line-height: 1.5;
+}
 
 /* Adapto los tamaños a las tablets. */
 @media (min-width: 601px) and (max-width: 1024px) {
@@ -176,71 +170,54 @@ select {
     .key { min-height: 50px; font-size: 18px; }
 }
 
-/* En móviles hago el teclado cómodo para pulsarlo con el dedo. */
+/* En móviles hago más pequeños los cuadros de Puntos y Récord,
+   y reduzco el círculo del Pokémon para aprovechar la pantalla. */
 @media (max-width: 600px) {
     .app { padding: 12px 10px 48px; }
     .card { padding: 12px; border-radius: 16px; }
     h1 { font-size: 22px; gap: 8px; }
-    .portrait { width: min(70vw, 260px); }
-    .keyboard { grid-template-columns: repeat(7, minmax(0, 1fr)); gap: 5px; }
-    .key { min-height: 44px; font-size: 15px; }
-    .actions button { min-height: 46px; }
-}
-@media (max-width: 400px) { .actions { flex-direction: column; } }
-@media (max-width: 360px) {
-    h1 { font-size: 19px; }
-    .portrait { width: min(68vw, 220px); }
-    .letter { min-width: 20px; font-size: 19px; }
-    .key { min-height: 40px; font-size: 14px; }
-}
 
-/* Mantengo un margen inferior seguro también en los móviles pequeños. */
-@media (max-width: 600px) {
-    @supports (padding-bottom: env(safe-area-inset-bottom)) {
-        .app { padding-bottom: calc(48px + env(safe-area-inset-bottom)); }
+    /* Los cuadros ocupan menos altura, pero siguen en dos columnas. */
+    .stats { gap: 8px; margin: 10px 0; }
+    .stat { padding: 6px 4px; border-radius: 9px; }
+    .stat b { font-size: 19px; }
+    .stat small { font-size: 10px; }
+
+    /* El círculo pasa de un máximo de 260 px a 200 px. */
+    .portrait {
+        width: min(55vw, 200px);
+        margin: 12px auto 10px;
+        border-width: 5px;
     }
-}
 
-/* ==========================================
-   REDUZCO EL TAMAÑO DE LAS LETRAS
-========================================== */
-
-/* Hago más compacto el teclado del juego. */
-.keyboard {
-    gap: 4px;
-}
-
-/* Reduzco el tamaño de los botones
-   sin hacerlos demasiado pequeños para pulsar. */
-.key {
-    min-height: 40px;
-    font-size: 14px;
-    border-radius: 7px;
-}
-
-/* Ajusto las letras del nombre del Pokémon. */
-.letter {
-    min-width: 21px;
-    height: 36px;
-    line-height: 33px;
-    font-size: 19px;
-}
-
-/* En móviles mantengo un tamaño cómodo
-   para utilizar el teclado con los dedos. */
-@media (max-width: 600px) {
+    /* Conservo el teclado compacto que ya tenías. */
     .keyboard {
         grid-template-columns: repeat(7, minmax(0, 1fr));
         gap: 4px;
     }
+    .key { min-height: 40px; font-size: 14px; }
+    .letter { min-width: 21px; font-size: 19px; }
+    .actions button { min-height: 46px; }
+}
 
-    .key {
-        min-height: 40px;
-        font-size: 14px;
-    }
+/* En teléfonos estrechos coloco los botones uno debajo del otro. */
+@media (max-width: 400px) {
+    .actions { flex-direction: column; }
+}
 
-    .letter {
-        min-width: 21px;
-        font-size: 19px;
+/* En los teléfonos más pequeños reduzco un poco más el círculo. */
+@media (max-width: 360px) {
+    h1 { font-size: 19px; }
+    .stat { padding: 5px 3px; }
+    .stat b { font-size: 18px; }
+    .portrait { width: min(55vw, 180px); }
+    .letter { min-width: 20px; font-size: 19px; }
+    .key { min-height: 40px; font-size: 14px; }
+}
+
+/* Respeto el área inferior de seguridad de los iPhone. */
+@media (max-width: 600px) {
+    @supports (padding-bottom: env(safe-area-inset-bottom)) {
+        .app { padding-bottom: calc(48px + env(safe-area-inset-bottom)); }
     }
 }
