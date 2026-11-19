@@ -170,49 +170,57 @@ select {
     .key { min-height: 50px; font-size: 18px; }
 }
 
-/* En móviles hago más pequeños los cuadros de Puntos y Récord,
-   y reduzco el círculo del Pokémon para aprovechar la pantalla. */
+/* En móviles reduzco las estadísticas, el círculo y los botones inferiores.
+   Mantengo el desplazamiento normal para que Safari no oculte contenido. */
 @media (max-width: 600px) {
-    .app { padding: 12px 10px 48px; }
-    .card { padding: 12px; border-radius: 16px; }
-    h1 { font-size: 22px; gap: 8px; }
+    .app { padding: 10px 10px 48px; }
+    .card { padding: 10px; border-radius: 16px; }
+    h1 { font-size: 21px; gap: 8px; margin: 5px 0 12px; }
 
-    /* Los cuadros ocupan menos altura, pero siguen en dos columnas. */
-    .stats { gap: 8px; margin: 10px 0; }
-    .stat { padding: 6px 4px; border-radius: 9px; }
-    .stat b { font-size: 19px; }
-    .stat small { font-size: 10px; }
+    /* Hago más bajos los cuadros de Puntos y Récord. */
+    .stats { gap: 6px; margin: 8px 0; }
+    .stat { padding: 4px 3px; border-radius: 8px; }
+    .stat b { font-size: 16px; }
+    .stat small { font-size: 9px; }
 
-    /* El círculo pasa de un máximo de 260 px a 200 px. */
+    /* Reduzco el círculo sin alterar su forma ni la máscara. */
     .portrait {
-        width: min(55vw, 200px);
-        margin: 12px auto 10px;
+        width: min(48vw, 175px);
+        margin: 9px auto 8px;
         border-width: 5px;
     }
 
-    /* Conservo el teclado compacto que ya tenías. */
-    .keyboard {
-        grid-template-columns: repeat(7, minmax(0, 1fr));
-        gap: 4px;
-    }
-    .key { min-height: 40px; font-size: 14px; }
+    /* Compacto los espacios alrededor del nombre y los mensajes. */
+    .info { min-height: 24px; }
+    .word { margin: 9px 0 12px; }
+    .message { min-height: 38px; margin: 8px 0; }
+
+    /* Mantengo las teclas cómodas sin ocupar demasiado alto. */
+    .keyboard { grid-template-columns: repeat(7, minmax(0, 1fr)); gap: 4px; }
+    .key { min-height: 38px; font-size: 14px; }
     .letter { min-width: 21px; font-size: 19px; }
-    .actions button { min-height: 46px; }
+
+    /* Hago más pequeños los botones de Pista y Siguiente Pokémon.
+       Los dejo en la misma fila para ahorrar altura. */
+    .actions { flex-direction: row; gap: 6px; }
+    .actions button {
+        min-height: 40px;
+        padding: 8px 5px;
+        border-radius: 9px;
+        font-size: 12px;
+        line-height: 1.2;
+    }
+    .progress { margin: 7px 0; }
+    .note { margin-top: 10px; }
 }
 
-/* En teléfonos estrechos coloco los botones uno debajo del otro. */
-@media (max-width: 400px) {
-    .actions { flex-direction: column; }
-}
-
-/* En los teléfonos más pequeños reduzco un poco más el círculo. */
+/* En pantallas especialmente estrechas ajusto un poco más el contenido. */
 @media (max-width: 360px) {
     h1 { font-size: 19px; }
-    .stat { padding: 5px 3px; }
-    .stat b { font-size: 18px; }
-    .portrait { width: min(55vw, 180px); }
-    .letter { min-width: 20px; font-size: 19px; }
-    .key { min-height: 40px; font-size: 14px; }
+    .portrait { width: min(47vw, 160px); }
+    .letter { min-width: 20px; font-size: 18px; }
+    .key { min-height: 38px; font-size: 13px; }
+    .actions button { font-size: 11px; }
 }
 
 /* Respeto el área inferior de seguridad de los iPhone. */
