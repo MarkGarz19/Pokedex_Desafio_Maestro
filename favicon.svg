@@ -1,0 +1,18 @@
+
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+
+  <!-- Dibujo el círculo exterior de mi Poké Ball. -->
+  <circle cx="32" cy="32" r="29" fill="#ffffff" stroke="#161719" stroke-width="5"></circle>
+
+  <!-- Pinto la mitad superior de rojo. -->
+  <path d="M3 32 A29 29 0 0 1 61 32 Z" fill="#e63946"></path>
+
+  <!-- Añado la línea central negra. -->
+  <path d="M4 32 H60" stroke="#161719" stroke-width="7"></path>
+
+  <!-- Creo el botón central de la Poké Ball. -->
+  <circle cx="32" cy="32" r="11" fill="#161719"></circle>
+
+  <circle cx="32" cy="32" r="6" fill="#ffffff"></circle>
+
+</svg>
