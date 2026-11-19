@@ -552,3 +552,148 @@ select {
         flex-direction: column;
     }
 }
+
+
+
+/* ==========================================
+   ADAPTACIÓN A MÓVILES, TABLETS Y ORDENADORES
+========================================== */
+
+/* Evito que el contenido se salga
+   de la pantalla en dispositivos pequeños. */
+
+html,
+body {
+    width: 100%;
+    min-height: 100%;
+    overflow-x: hidden;
+}
+
+/* Hago que el juego ocupe el espacio
+   disponible sin superar su ancho máximo. */
+
+.app {
+    width: 100%;
+    max-width: 630px;
+    margin: 0 auto;
+}
+
+/* Evito que las imágenes se salgan
+   de sus contenedores. */
+
+img,
+svg {
+    max-width: 100%;
+}
+
+/* Hago que los botones sean cómodos
+   de pulsar con los dedos. */
+
+button,
+select {
+    touch-action: manipulation;
+}
+
+/* ==========================================
+   TABLETS
+========================================== */
+
+@media (min-width: 601px) and (max-width: 1024px) {
+
+    /* Aprovecho el espacio de la tablet
+       sin hacer el juego demasiado ancho. */
+
+    .app {
+        max-width: 700px;
+        padding: 24px;
+    }
+
+    .portrait {
+        width: 300px;
+    }
+
+    .key {
+        min-height: 50px;
+        font-size: 18px;
+    }
+}
+
+/* ==========================================
+   MÓVILES
+========================================== */
+
+@media (max-width: 600px) {
+
+    /* Reduzco los márgenes para aprovechar
+       mejor la pantalla del móvil. */
+
+    .app {
+        padding: 12px 10px 24px;
+    }
+
+    .card {
+        padding: 12px;
+        border-radius: 16px;
+    }
+
+    h1 {
+        font-size: 22px;
+        gap: 8px;
+    }
+
+    /* Ajusto el círculo del Pokémon
+       al ancho disponible. */
+
+    .portrait {
+        width: min(70vw, 260px);
+    }
+
+    /* Distribuyo el teclado en siete columnas
+       para que las letras no queden apretadas. */
+
+    .keyboard {
+        grid-template-columns: repeat(7, minmax(0, 1fr));
+        gap: 5px;
+    }
+
+    .key {
+        min-height: 44px;
+        font-size: 15px;
+    }
+
+    /* Mantengo los botones principales
+       fáciles de utilizar. */
+
+    .actions button {
+        min-height: 46px;
+    }
+}
+
+/* ==========================================
+   MÓVILES MUY PEQUEÑOS
+========================================== */
+
+@media (max-width: 360px) {
+
+    h1 {
+        font-size: 19px;
+    }
+
+    .portrait {
+        width: min(68vw, 220px);
+    }
+
+    .letter {
+        min-width: 20px;
+        font-size: 19px;
+    }
+
+    .key {
+        min-height: 40px;
+        font-size: 14px;
+    }
+
+    .actions {
+        flex-direction: column;
+    }
+}
